@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About | Emily Photography</title>
+  <meta name="description" content="Meet Emily — a modern portrait photographer focused on a relaxed, guided experience." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="brand" href="index.html" aria-label="Emily Photography home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Emily Photography<small>Modern • Timeless • True-to-you</small></span>
+      </a>
+
+      <label class="burger" for="nav-toggle" aria-hidden="true"><span></span></label>
+
+      <div class="navlinks" role="navigation" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a class="active" href="about.html">About</a>
+      </div>
+
+      <div class="nav-cta">
+        <a class="btn primary" href="contact.html">Book a Session</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container grid two-col">
+      <div>
+        <span class="pill">Behind the camera</span>
+        <h1 style="margin:14px 0 10px;">Hi, I’m Emily.</h1>
+        <p style="color:var(--muted); max-width:70ch;">
+          I specialize in modern, natural photography with a calm, guided approach. My goal is simple:
+          create images that look elevated without feeling forced — and make the session genuinely enjoyable.
+        </p>
+
+        <div class="section tight">
+          <div class="card pad">
+            <div class="kicker">What you can expect</div>
+            <p style="margin-top:10px;">
+              • A quick planning chat before your session<br>
+              • Gentle direction and posing help throughout<br>
+              • Clean edits with true-to-life color and flattering tones<br>
+              • A gallery you’ll actually want to share
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+<a href="index.html#book" class="btn dark">Work with me</a>
+        </div>
+      </div>
+
+      <div class="media">
+        <!-- Replace with a headshot or behind-the-scenes photo -->
+        <img src="images/about-emily.jpg" alt="Emily, photographer" />
+        <div class="caption">Emily • Photographer</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footergrid">
+    <div>
+<div class="footerbrand">
+  <span class="mark" aria-hidden="true"></span>
+  <span>Emily Photography</span>
+</div>
+      <p style="margin:10px 0 0;">© <span id="year"></span> Emily Photography</p>
+    </div>
+    <div class="footerlinks">
+<a href="index.html">Home</a>
+<a href="portfolio.html">Portfolio</a>
+<a href="about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

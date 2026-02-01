@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio | Emily Photography</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img class="brand__logo" src="images/logo.png" alt="Emily Ann Photography logo">
+      <span class="brand__text">
+        <strong>Emily Photography</strong>
+        <small>Modern • Timeless • True-to-you</small>
+      </span>
+    </a>
+
+    <nav class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="book.html">Book a Session</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section">
+    <h1 class="pageTitle">Portfolio</h1>
+    <p class="pageSub">A few favorites — more coming soon.</p>
+
+    <!-- ✅ Required gallery container -->
+    <div class="gallery" id="gallery"></div>
+  </section>
+</main>
+
+<!-- ✅ Lightbox Modal -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox__backdrop" data-close></div>
+
+  <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Image preview">
+
+    <button class="lightbox__back" type="button" data-close aria-label="Back to gallery">
+      ← Back
+    </button>
+
+    <button class="lightbox__close" type="button" aria-label="Close (Esc)" data-close>
+      &times;
+    </button>
+
+    <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous (←)">
+      &#10094;
+    </button>
+
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" id="lightboxImg" alt="">
+      <figcaption class="lightbox__caption" id="lightboxCaption"></figcaption>
+    </figure>
+
+    <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next (→)">
+      &#10095;
+    </button>
+
+  </div>
+</div>
+
+<script>
+(() => {
+  // 👇 LIST ONLY FILES THAT ACTUALLY EXIST IN /images
+  const imageFiles = [
+    "bw-1.jpg",
+
+    "friendship-1.jpg",
+    "friendship-2.jpg",
+
+    "kids-1.jpg",
+    "kids-2.jpg",
+
+    "racer-1.jpg",
+    "racer-2.jpg",
+    "racer-3.jpg",
+    "racer-4.jpg",
+
+    "racing-1.jpg",
+
+    "wedding-1.jpg",
+    "wedding-2.jpg",
+    "wedding-3.jpg",
+    "wedding-4.jpg",
+    "wedding-5.jpg",
+    "wedding-6.jpg",
+
+    "woman-1.jpg",
+    "woman-2.jpg",
+    "woman-3.jpg",
+    "woman-4.jpg",
+    "woman-5.jpg",
+    "woman-6.jpg"
+  ];
+
+  const gallery = document.getElementById("gallery");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxCaption = document.getElementById("lightboxCaption");
+
+  if (!gallery) return console.error("Missing #gallery element");
+  if (!lightbox || !lightboxImg || !lightboxCaption) {
+    return console.error("Missing lightbox elements (#lightbox, #lightboxImg, #lightboxCaption)");
+  }
+
+  let currentIndex = 0;
+  let lastTriggerEl = null;
+
+  // Build gallery
+  imageFiles.forEach((file, i) => {
+    const src = "images/" + file;
+
+    const tile = document.createElement("a");
+    tile.className = "tile";
+    tile.href = src;
+    tile.dataset.index = String(i);
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "Photography by Emily";
+    img.loading = "lazy";
+
+    tile.appendChild(img);
+    gallery.appendChild(tile);
+  });
+
+  function openLightbox(index) {
+    currentIndex = index;
+
+    const file = imageFiles[currentIndex];
+    const src = "images/" + file;
+
+    lightboxImg.src = src;
+    lightboxImg.alt = "Photography by Emily";
+    lightboxCaption.textContent = ""; // optional: set a caption if you want
+
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+
+    // Focus Back button (best for keyboard users), otherwise Close button
+    const backBtn = lightbox.querySelector(".lightbox__back");
+    const closeBtn = lightbox.querySelector(".lightbox__close");
+    (backBtn || closeBtn)?.focus();
+
+    // Prevent background scroll
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+
+    lightboxImg.src = "";
+    lightboxCaption.textContent = "";
+
+    document.body.style.overflow = "";
+
+    // Return focus to the tile that opened the lightbox
+    if (lastTriggerEl && typeof lastTriggerEl.focus === "function") {
+      lastTriggerEl.focus();
+    }
+  }
+
+  function showNext(delta) {
+    currentIndex = (currentIndex + delta + imageFiles.length) % imageFiles.length;
+    const src = "images/" + imageFiles[currentIndex];
+    lightboxImg.src = src;
+  }
+
+  // Open on tile click (prevent navigating to image file)
+  gallery.addEventListener("click", (e) => {
+    const tile = e.target.closest("a.tile");
+    if (!tile) return;
+
+    e.preventDefault();
+    lastTriggerEl = tile;
+
+    const index = Number(tile.dataset.index);
+    openLightbox(Number.isFinite(index) ? index : 0);
+  });
+
+  // Close on anything with data-close (backdrop, ← Back, ×)
+  lightbox.addEventListener("click", (e) => {
+    const closeEl = e.target.closest("[data-close]");
+    if (closeEl) closeLightbox();
+  });
+
+  // Prev/Next buttons
+  lightbox.querySelector(".lightbox__nav--prev")?.addEventListener("click", () => showNext(-1));
+  lightbox.querySelector(".lightbox__nav--next")?.addEventListener("click", () => showNext(1));
+
+  // Keyboard support: Esc closes; arrows navigate
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") showNext(-1);
+    if (e.key === "ArrowRight") showNext(1);
+  });
+})();
+</script>
+
+</body>
+</html>
