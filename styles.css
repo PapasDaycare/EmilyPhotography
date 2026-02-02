@@ -89,18 +89,24 @@ header{
 .btn:hover{ transform: translateY(-1px); }
 
 /* Optional themed buttons (if you ever use them) */
+/* Support both class formats: .btn.primary (used in some HTML) and .btn-primary (used in CSS) */
+.btn.primary,
 .btn-primary{
   background: var(--brand-mauve);
   color:#fff;
   border:1px solid var(--brand-mauve);
 }
+.btn.primary:hover,
 .btn-primary:hover{ filter: brightness(.95); }
 
+/* Secondary (both class formats) */
+.btn.secondary,
 .btn-secondary{
   background: transparent;
   color: var(--brand-mauve);
   border: 1px solid rgba(144,80,88,.35);
 }
+.btn.secondary:hover,
 .btn-secondary:hover{ background: rgba(208,120,120,.10); }
 
 /* Hero */

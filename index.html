@@ -11,23 +11,24 @@
 <body>
 
 <header>
-<a class="brand" href="index.html">
-  <img
-    class="brand__logo"
-    src="images/logo.png"
-    alt="Emily Ann Photography logo"
-  >
-  <span class="brand__text">
-    <strong>Emily Photography</strong>
-    <small>Modern • Timeless • True-to-you</small>
-  </span>
-</a>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img
+        class="brand__logo"
+        src="images/logo.png"
+        alt="Emily Ann Photography logo"
+      >
+      <span class="brand__text">
+        <strong>Emily Photography</strong>
+        <small>Modern • Timeless • True-to-you</small>
+      </span>
+    </a>
 
     <nav class="navlinks">
       <a href="index.html" class="active">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="about.html">About</a>
-href="book.html"
+      <a href="book.html">Book a Session</a>
     </nav>
   </div>
 </header>
@@ -70,9 +71,13 @@ href="book.html"
 
 <footer>
   <div class="container">
-    <p>© Emily Photography • Alpena, Michigan</p>
+    <p>© <span id="year"></span> Emily Photography • Alpena, Michigan</p>
   </div>
 </footer>
 
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
 </body>
-</html>
+</html> 
