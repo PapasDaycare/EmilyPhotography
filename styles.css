@@ -31,25 +31,26 @@ header{
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:16px;
   text-decoration:none;
   color:inherit;
   font-weight:700;
 }
 .brand__logo{
-  width:44px;
-  height:44px;
-  border-radius:12px;
+  width:68px;
+  height:68px;
+  border-radius:16px;
   object-fit:cover;
-  box-shadow: 0 6px 18px rgba(144, 80, 88, .18);
+  box-shadow: 0 8px 24px rgba(144, 80, 88, .22);
 }
-.brand__text strong{ display:block; font-weight:800; }
+.brand__text strong{ display:block; font-weight:800; font-size:18px; }
 .brand__text small{
   display:block;
   opacity:.75;
   margin-top:2px;
   font-weight:500;
   color:#64748b;
+  font-size:14px;
 }
 
 /* Nav */
@@ -88,6 +89,14 @@ header{
 .btn.dark{ background: var(--ink); color:#fff; }
 .btn:hover{ transform: translateY(-1px); }
 
+/* Trust line */
+.trust-line{
+  margin-top: 18px;
+  font-size: 14px;
+  color: #64748b;
+  font-style: italic;
+}
+
 /* Optional themed buttons (if you ever use them) */
 /* Support both class formats: .btn.primary (used in some HTML) and .btn-primary (used in CSS) */
 .btn.primary,
@@ -109,10 +118,14 @@ header{
 .btn.secondary:hover,
 .btn-secondary:hover{ background: rgba(208,120,120,.10); }
 
-/* Hero */
+/* =============================
+   HERO SECTION
+============================= */
+
+/* Hero base */
 .hero{
   position: relative;
-  padding:72px 0;
+  padding: clamp(28px, 5vw, 56px) 0;
 }
 
 /* Subtle rose glow behind hero area */
@@ -136,6 +149,31 @@ header{
   z-index: 1;
 }
 
+/* Hero grid layout */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(18px, 4vw, 44px);
+  align-items: center;
+}
+
+/* Hero copy styles */
+.hero-copy h1 {
+  margin: 0 0 14px;
+  font-size:56px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-copy p {
+  margin: 0 0 22px;
+  max-width: 54ch;
+  color:#334155;
+}
+
+/* Fallback for non-grid hero h1 and p */
 .hero h1{
   font-size:56px;
   line-height:1.05;
@@ -150,11 +188,57 @@ header{
   margin:0 0 22px;
 }
 
-/* Eye-catch: highlight the word "you" in the hero headline (VISIBLE fix) */
+/* Hero image card */
+.hero-media {
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.hero-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* Slideshow */
+.slideshow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slideshow .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slideshow .slide.active {
+  position: relative;
+  opacity: 1;
+}
+
+/* Logo image in slideshow - use contain instead of cover */
+.slideshow .slide[src*="logo"] {
+  object-fit: contain;
+  background: linear-gradient(135deg, var(--paper) 0%, rgba(232,176,176,0.15) 100%);
+  padding: 20px;
+}
+
+/* Eye-catch: highlight the word "you" in the hero headline */
 .hero .accent{
   position: relative;
   display: inline-block;
-  z-index: 1; /* keep text above highlight */
+  z-index: 1;
 }
 
 .hero .accent::after{
@@ -170,7 +254,7 @@ header{
     rgba(232,176,176,.70)
   );
   border-radius: 999px;
-  z-index: 0; /* NOT -1, so it stays above hero glow */
+  z-index: 0;
   transform: scaleX(0);
   transform-origin: left;
   animation: underlineIn .8s ease-out .25s forwards;
@@ -180,8 +264,46 @@ header{
   to{ transform: scaleX(1); }
 }
 
+/* Hero entrance animations */
+.hero h1,
+.hero p,
+.hero .btnRow{
+  opacity: 0;
+  transform: translateY(12px);
+  animation: heroFadeUp .7s ease-out forwards;
+}
+
+.hero p{ animation-delay: .12s; }
+.hero .btnRow{ animation-delay: .22s; }
+
+@keyframes heroFadeUp{
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.hero .accent::after{
+  animation: underlineIn .7s ease-out .45s both;
+}
+
+/* Responsive: stack grid on mobile */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-media {
+    order: 2;
+  }
+}
+
 @media (prefers-reduced-motion: reduce){
   .hero .accent::after{ animation: none; transform: scaleX(1); }
+  .hero h1,
+  .hero p,
+  .hero .btnRow{
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Sections */
@@ -507,26 +629,6 @@ html{ scroll-behavior: smooth; }
 
 /* Offset for sticky header when scrolling to #book */
 #book{ scroll-margin-top: 90px; }
-/* --- Hero entrance animation (makes motion obvious) --- */
-.hero h1,
-.hero p,
-.hero .btnRow{
-  opacity: 0;
-  transform: translateY(12px);
-  animation: heroFadeUp .7s ease-out forwards;
-}
-
-.hero p{ animation-delay: .12s; }
-.hero .btnRow{ animation-delay: .22s; }
-
-@keyframes heroFadeUp{
-  to{ opacity: 1; transform: translateY(0); }
-}
-
-/* Make the underline animation reliably noticeable */
-.hero .accent::after{
-  animation: underlineIn .7s ease-out .45s both;
-}
 
 /* =========================
    Google Form Embed (Book page)
@@ -545,12 +647,12 @@ html{ scroll-behavior: smooth; }
   display: block;
   border: 0;
   background: transparent;
-  min-height: 1100px; /* raise if submit button is cut off */
+  min-height: 1476px; /* updated to match Google Form height */
 }
 
 @media (max-width: 520px){
   .formEmbed iframe{
-    min-height: 1250px;
+    min-height: 1476px;
   }
 }
 

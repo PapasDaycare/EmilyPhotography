@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Emily Photography | Alpena, Michigan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 
 <body>
@@ -39,36 +39,32 @@
 <main id="main">
 
   <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1>Photography that feels modern, natural, and effortlessly you.</h1>
 
- 
-    <div class="container">
-      <h1>Photography that feels modern, natural, and you.</h1>
+        <p>
+          Emily Photography captures portraits, couples, and events across
+          Northern Michigan with clean editing, flattering light, and a relaxed experience.
+        </p>
 
-      <p>
-        Emily Photography captures portraits, couples, and events across
-        Northern Michigan with clean editing, flattering light, and a relaxed experience.
-      </p>
-
-      <div class="btnRow">
-        <a class="btn dark" href="#book">Book a Session</a>
-        <a class="btn" href="portfolio.html">View Portfolio</a>
+        <div class="btnRow">
+          <a class="btn dark" href="book.html">Book a Session</a>
+          <a class="btn" href="portfolio.html">View Portfolio</a>
+        </div>
+        
+        <p class="trust-line">Trusted by families, couples, and creatives across Northern Michigan.</p>
       </div>
-    </div>
-  </section>
 
-  <section id="book" class="section">
-    <div class="container card pad" style="text-align:center;">
-      <h2>Book a Session</h2>
-      <p>Share your date + vibe — I’ll respond with next steps.</p>
-<div class="formEmbed" style="margin-top:24px; text-align:left;">
-  <iframe
-    src="https://docs.google.com/forms/d/e/1FAIpQLScd4EFH-3sNKVYzBAOEiXhfHDELiRGrvVAjnkmU3j-9_em-rw/viewform?embedded=true"
-    title="Booking form"
-    loading="lazy"
-    style="width:100%; min-height:800px; border:0;">
-    Loading…
-  </iframe>
-</div>
+      <div class="hero-media">
+        <div class="slideshow">
+          <img src="images/logo.png" alt="Emily Ann Photography logo" class="slide active">
+          <img src="images/woman-1.jpg" alt="Portrait photography by Emily Photography" class="slide">
+          <img src="images/wedding-1.jpg" alt="Wedding photography by Emily Photography" class="slide">
+          <img src="images/woman-2.jpg" alt="Portrait photography by Emily Photography" class="slide">
+          <img src="images/wedding-3.jpg" alt="Wedding photography by Emily Photography" class="slide">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -103,6 +99,23 @@
     document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{ update(false); }));
 
     document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && container.classList.contains('nav-open')){ update(false); }});
+  })();
+
+  // Hero slideshow
+  (function(){
+    const slides = document.querySelectorAll('.slideshow .slide');
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    
+    // Change slide every 4 seconds
+    setInterval(nextSlide, 4000);
   })();
 </script> 
 
