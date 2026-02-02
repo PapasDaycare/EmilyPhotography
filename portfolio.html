@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="description" content="Portfolio — a selection of Emily's portraits, weddings, and lifestyle work." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio | Emily Photography</title>
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="styles.css?v=4" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="styles.css?v=4" /></noscript>
+  <link rel="icon" href="/images/logo.png">
 </head>
 
 
@@ -105,6 +110,33 @@
     "woman-6.jpg"
   ];
 
+  // Image intrinsic sizes (width, height) — used to set img width/height attributes to avoid CLS
+  const imageSizes = {
+    "bw-1.jpg": [1080, 1707],
+    "friendship-1.jpg": [1366, 2048],
+    "friendship-2.jpg": [1366, 2048],
+    "kids-1.jpg": [2048, 1886],
+    "kids-2.jpg": [2048, 1366],
+    "racer-1.jpg": [2048, 1962],
+    "racer-2.jpg": [1812, 2048],
+    "racer-3.jpg": [2048, 1366],
+    "racer-4.jpg": [2048, 1366],
+    "racer-5.jpg": [2048, 1526],
+    "racing-1.jpg": [2048, 1962],
+    "wedding-1.jpg": [2048, 1366],
+    "wedding-2.jpg": [1344, 2048],
+    "wedding-3.jpg": [2048, 1366],
+    "wedding-4.jpg": [1366, 2048],
+    "wedding-5.jpg": [2048, 1366],
+    "wedding-6.jpg": [2048, 1366],
+    "woman-1.jpg": [1366, 2048],
+    "woman-2.jpg": [2048, 1366],
+    "woman-3.jpg": [2048, 1366],
+    "woman-4.jpg": [1366, 2048],
+    "woman-5.jpg": [1366, 2048],
+    "woman-6.jpg": [1366, 2048]
+  };
+
   const gallery = document.getElementById("gallery");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImg");
@@ -131,6 +163,13 @@
     img.src = src;
     img.alt = "Photography by Emily";
     img.loading = "lazy";
+
+    // set intrinsic dimensions when available to avoid layout shifts
+    const size = imageSizes[file];
+    if (size && size.length === 2) {
+      img.width = size[0];
+      img.height = size[1];
+    }
 
     tile.appendChild(img);
     gallery.appendChild(tile);
