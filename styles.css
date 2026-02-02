@@ -427,9 +427,6 @@ footer{ padding:28px 0; color:#64748b; }
   z-index: 10000;
 }
 
-/* Nav toggle (hidden checkbox) */
-.nav-toggle{ position: absolute; left: -9999px; }
-
 /* Burger button */
 .burger{
   display:none;
@@ -468,11 +465,17 @@ footer{ padding:28px 0; color:#64748b; }
     border:1px solid #eaeaea;
   }
 
-  /* Show nav when checkbox is checked (structure: input + label + nav) */
-  .nav-toggle:checked + .burger + .navlinks{ display:flex; }
+  /* Show nav when the container has .nav-open */
+  .container.nav.nav-open .navlinks{ display:flex; }
 
   .navlinks a{ margin:0; padding:10px 12px; border-radius:8px; }
 }
+
+/* Ensure focus-visible outlines for burger */
+.burger:focus-visible{ outline:3px solid currentColor; outline-offset:3px; }
+
+/* Brand small contrast fix */
+.brand__text small{ color: var(--ink); }
 
 /* Ensure focus-visible outlines for burger */
 .burger:focus-visible{ outline:3px solid currentColor; outline-offset:3px; }

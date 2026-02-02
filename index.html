@@ -25,8 +25,7 @@
       </span>
     </a>
 
-    <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true" />
-    <label class="burger" for="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false"><span></span></label>
+    <button class="burger" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false"><span></span></button>
 
     <nav id="primary-nav" class="navlinks" role="navigation">
       <a href="index.html" class="active">Home</a>
@@ -85,31 +84,27 @@
   // set year
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // mobile nav toggle accessibility
+  // accessible mobile nav toggle
   (function(){
-    const toggle = document.getElementById('nav-toggle');
     const burger = document.querySelector('.burger');
-    const nav = document.getElementById('primary-nav');
-    if (!toggle || !burger || !nav) return;
+    const container = document.querySelector('.container.nav');
+    if (!burger || !container) return;
 
-    function update(){
-      const open = toggle.checked;
+    function update(open){
       burger.setAttribute('aria-expanded', String(open));
+      container.classList.toggle('nav-open', !!open);
     }
 
-    toggle.addEventListener('change', update);
-
-    // close nav when a link is clicked (small screens)
-    document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{
-      if (toggle.checked) { toggle.checked = false; update(); }
-    }));
-
-    // Esc closes nav
-    document.addEventListener('keydown', (e)=>{
-      if (e.key === 'Escape' && toggle.checked){ toggle.checked = false; update(); }
+    burger.addEventListener('click', ()=>{
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      update(!open);
     });
+
+    document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{ update(false); }));
+
+    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && container.classList.contains('nav-open')){ update(false); }});
   })();
-</script>
+</script> 
 
 </body>
 </html>  

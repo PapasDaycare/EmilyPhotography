@@ -20,8 +20,7 @@
       </span>
     </a>
 
-    <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true" />
-    <label class="burger" for="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false"><span></span></label>
+    <button class="burger" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false"><span></span></button>
 
     <nav id="primary-nav" class="navlinks">
       <a href="index.html">Home</a>
@@ -214,13 +213,13 @@
 
 // mobile nav accessibility
 (function(){
-  const toggle = document.getElementById('nav-toggle');
   const burger = document.querySelector('.burger');
-  if (!toggle || !burger) return;
-  function update(){ burger.setAttribute('aria-expanded', String(toggle.checked)); }
-  toggle.addEventListener('change', update);
-  document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{ if (toggle.checked){ toggle.checked=false; update(); }}));
-  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && toggle.checked){ toggle.checked = false; update(); }});
+  const container = document.querySelector('.container.nav');
+  if (!burger || !container) return;
+  function update(open){ burger.setAttribute('aria-expanded', String(open)); container.classList.toggle('nav-open', !!open); }
+  burger.addEventListener('click', ()=>{ update(burger.getAttribute('aria-expanded') !== 'true'); });
+  document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{ update(false); }));
+  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && container.classList.contains('nav-open')){ update(false); }});
 })();
 </script>
 
