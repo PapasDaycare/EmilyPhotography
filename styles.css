@@ -404,6 +404,77 @@ footer{ padding:28px 0; color:#64748b; }
   height:1100px;
   border:0;
 }
+
+/* Skip link (accessible) */
+.skip-link{
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus{
+  left: 16px;
+  top: 16px;
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(15,23,42,.12);
+  z-index: 10000;
+}
+
+/* Nav toggle (hidden checkbox) */
+.nav-toggle{ position: absolute; left: -9999px; }
+
+/* Burger button */
+.burger{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  cursor:pointer;
+  border:1px solid transparent;
+  background:transparent;
+}
+.burger span{ display:block; width:18px; height:2px; background:var(--ink); position:relative; }
+.burger span::before,
+.burger span::after{ content:''; position:absolute; left:0; right:0; height:2px; background:var(--ink); }
+.burger span::before{ top:-6px; }
+.burger span::after{ top:6px; }
+
+@media (max-width: 760px){
+  .container.nav{ position:relative; }
+  .burger{ display:flex; }
+
+  /* Hide nav links by default, show as stacked panel when toggled */
+  .navlinks{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--paper);
+    padding:16px;
+    flex-direction:column;
+    gap:8px;
+    border-bottom-left-radius:12px;
+    border-bottom-right-radius:12px;
+    border:1px solid #eaeaea;
+  }
+
+  /* Show nav when checkbox is checked (structure: input + label + nav) */
+  .nav-toggle:checked + .burger + .navlinks{ display:flex; }
+
+  .navlinks a{ margin:0; padding:10px 12px; border-radius:8px; }
+}
+
+/* Ensure focus-visible outlines for burger */
+.burger:focus-visible{ outline:3px solid currentColor; outline-offset:3px; }
 @media (max-width: 760px){
   .formEmbed iframe{ height:1250px; }
 }

@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
 <header>
   <div class="container nav">
@@ -24,7 +25,10 @@
       </span>
     </a>
 
-    <nav class="navlinks">
+    <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true" />
+    <label class="burger" for="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false"><span></span></label>
+
+    <nav id="primary-nav" class="navlinks" role="navigation">
       <a href="index.html" class="active">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="about.html">About</a>
@@ -33,7 +37,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <section class="hero">
 
@@ -76,8 +80,34 @@
 </footer>
 
 <script>
+  // set year
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // mobile nav toggle accessibility
+  (function(){
+    const toggle = document.getElementById('nav-toggle');
+    const burger = document.querySelector('.burger');
+    const nav = document.getElementById('primary-nav');
+    if (!toggle || !burger || !nav) return;
+
+    function update(){
+      const open = toggle.checked;
+      burger.setAttribute('aria-expanded', String(open));
+    }
+
+    toggle.addEventListener('change', update);
+
+    // close nav when a link is clicked (small screens)
+    document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{
+      if (toggle.checked) { toggle.checked = false; update(); }
+    }));
+
+    // Esc closes nav
+    document.addEventListener('keydown', (e)=>{
+      if (e.key === 'Escape' && toggle.checked){ toggle.checked = false; update(); }
+    });
+  })();
 </script>
 
 </body>
-</html> 
+</html>  
