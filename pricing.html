@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Wedding Photography Packages | Emily Photography</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css?v=5">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img
+        class="brand__logo"
+        src="images/logo.png"
+        alt="Emily Ann Photography logo"
+      >
+      <span class="brand__text">
+        <strong>Emily Photography</strong>
+        <small>Modern • Timeless • True-to-you</small>
+      </span>
+    </a>
+
+    <button class="burger" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false"><span></span></button>
+
+    <nav id="primary-nav" class="navlinks" role="navigation">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="book.html">Book a Session</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="container">
+      <h1>Wedding Photography Packages</h1>
+      <p>Choose the perfect package for your special day. Each package is designed to capture your unique love story with professionalism and care.</p>
+    </div>
+  </section>
+
+  <section class="pricing-section">
+    <div class="container">
+      <div class="pricing-grid">
+        
+        <!-- Package 1 -->
+        <div class="pricing-card">
+          <div class="pricing-card__image">
+            <img src="images/woman-1.jpg" alt="Bride with flower crown">
+          </div>
+          <div class="pricing-card__header">
+            <h2>Package 1</h2>
+            <div class="pricing-card__price">$500</div>
+          </div>
+          <ul class="pricing-card__features">
+            <li>4 hours of coverage</li>
+            <li>Bridal sessions</li>
+            <li>Engagement sessions</li>
+            <li>Professional editing</li>
+          </ul>
+        </div>
+
+        <!-- Package 2 -->
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-card__image">
+            <img src="images/wedding-1.jpg" alt="Wedding dress hanging in window">
+          </div>
+          <div class="pricing-card__header">
+            <h2>Package 2</h2>
+            <div class="pricing-card__price">$1000</div>
+          </div>
+          <ul class="pricing-card__features">
+            <li>8 hours of coverage</li>
+            <li>Bridal sessions</li>
+            <li>Engagement sessions</li>
+            <li>Professional editing</li>
+            <li>Two photographers</li>
+            <li>Customized album</li>
+          </ul>
+        </div>
+
+        <!-- Package 3 -->
+        <div class="pricing-card">
+          <div class="pricing-card__image">
+            <img src="images/wedding-3.jpg" alt="Couple kissing">
+          </div>
+          <div class="pricing-card__header">
+            <h2>Package 3</h2>
+            <div class="pricing-card__price">$2000</div>
+          </div>
+          <ul class="pricing-card__features">
+            <li>12 hours of coverage</li>
+            <li>Bridal sessions</li>
+            <li>Engagement sessions</li>
+            <li>Professional editing</li>
+            <li>Two photographers</li>
+            <li>Customized album</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="cta-section__title">Contact us for more info.</h2>
+      <div class="cta-section__contact">
+        <a href="tel:989-255-0351" class="contact-link">(989)255-0351</a>
+        <a href="https://facebook.com" class="contact-link" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="mailto:Emily.hopp316@gmail.com" class="contact-link">Emily.hopp316@gmail.com</a>
+      </div>
+      <div class="btnRow" style="margin-top: 32px; justify-content: center;">
+        <a class="btn dark" href="book.html">Book a Session</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>© <span id="year"></span> Emily Photography • Alpena, Michigan</p>
+  </div>
+</footer>
+
+<script>
+  // set year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // accessible mobile nav toggle
+  (function(){
+    const burger = document.querySelector('.burger');
+    const container = document.querySelector('.container.nav');
+    if (!burger || !container) return;
+
+    function update(open){
+      burger.setAttribute('aria-expanded', String(open));
+      container.classList.toggle('nav-open', !!open);
+    }
+
+    burger.addEventListener('click', ()=>{
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      update(!open);
+    });
+
+    document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', ()=>{ update(false); }));
+
+    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && container.classList.contains('nav-open')){ update(false); }});
+  })();
+</script> 
+
+</body>
+</html>
