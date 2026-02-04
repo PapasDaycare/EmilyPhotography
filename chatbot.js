@@ -171,24 +171,38 @@ If asked about specific pricing, availability, or booking details, encourage the
     ];
 
     // Call our secure serverless function instead of OpenAI directly
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        messages: messages
-      })
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('API error response:', response.status, errorText);
-      throw new Error(`API request failed: ${response.status}`);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          messages: messages
+        }),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API error response:', response.status, errorText);
+        throw new Error(`API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout - please try again');
+      }
+      throw error;
     }
-
-    const data = await response.json();
-    return data.message;
   }
 }
 
