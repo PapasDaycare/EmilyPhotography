@@ -37,6 +37,15 @@
     <h1 class="pageTitle">Portfolio</h1>
     <p class="pageSub">A few favorites — more coming soon.</p>
 
+    <!-- Category Filter Tabs -->
+    <div class="portfolio-filters">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="weddings">Weddings</button>
+      <button class="filter-btn" data-category="portraits">Portraits</button>
+      <button class="filter-btn" data-category="families">Families</button>
+      <button class="filter-btn" data-category="events">Events</button>
+    </div>
+
     <!-- ✅ Required gallery container -->
     <div class="gallery" id="gallery"></div>
   </section>
@@ -136,23 +145,55 @@
 
   let currentIndex = 0;
   let lastTriggerEl = null;
+  let currentCategory = "all";
 
   // Build gallery
-  imageFiles.forEach((file, i) => {
-    const src = "images/" + file;
+  function buildGallery(category = "all") {
+    gallery.innerHTML = "";
+    let visibleIndex = 0;
+    
+    imageFiles.forEach((file, i) => {
+      // Extract category from path (e.g., "portfolio/weddings/..." -> "weddings")
+      const fileCategory = file.split('/')[1];
+      
+      // Skip if filtering and doesn't match category
+      if (category !== "all" && fileCategory !== category) return;
 
-    const tile = document.createElement("a");
-    tile.className = "tile";
-    tile.href = src;
-    tile.dataset.index = String(i);
+      const src = "images/" + file;
 
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = "Photography by Emily";
-    img.loading = "lazy";
+      const tile = document.createElement("a");
+      tile.className = "tile";
+      tile.href = src;
+      tile.dataset.index = String(i);
+      tile.dataset.category = fileCategory;
 
-    tile.appendChild(img);
-    gallery.appendChild(tile);
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "Photography by Emily";
+      img.loading = "lazy";
+
+      tile.appendChild(img);
+      gallery.appendChild(tile);
+      visibleIndex++;
+    });
+  }
+
+  // Initial gallery build
+  buildGallery();
+
+  // Category filter functionality
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Update active state
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      
+      // Filter gallery
+      const category = btn.dataset.category;
+      currentCategory = category;
+      buildGallery(category);
+    });
   });
 
   function openLightbox(index) {

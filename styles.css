@@ -326,11 +326,43 @@ footer{ padding:28px 0; color:#64748b; }
 .pageTitle{ margin:0 0 8px; font-size:40px; letter-spacing:-0.02em; }
 .pageSub{ margin:0 0 22px; color:#334155; }
 
+/* Portfolio filter buttons */
+.portfolio-filters{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-bottom: 8px;
+}
+
+.filter-btn{
+  padding: 10px 20px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--ink);
+}
+
+.filter-btn:hover{
+  background: rgba(208,120,120,.08);
+  border-color: var(--brand-rose);
+}
+
+.filter-btn.active{
+  background: var(--brand-mauve);
+  color: white;
+  border-color: var(--brand-mauve);
+}
+
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
   gap:24px;
-  margin-top:32px;
+  margin-top:24px;
   align-items:start;
 }
 
