@@ -3,7 +3,6 @@ class EmilyBot {
   constructor() {
     this.isOpen = false;
     this.messages = [];
-    this.apiKey = 'YOUR_OPENAI_API_KEY_HERE'; // Replace with your actual API key
     this.init();
   }
 
@@ -170,17 +169,14 @@ If asked about specific pricing, availability, or booking details, encourage the
       ...this.messages.slice(-10) // Last 10 messages for context
     ];
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call our secure serverless function instead of OpenAI directly
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.apiKey}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: messages,
-        max_tokens: 150,
-        temperature: 0.7
+        messages: messages
       })
     });
 
@@ -189,7 +185,7 @@ If asked about specific pricing, availability, or booking details, encourage the
     }
 
     const data = await response.json();
-    return data.choices[0].message.content;
+    return data.message;
   }
 }
 

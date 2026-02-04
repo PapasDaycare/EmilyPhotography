@@ -1,2 +1,13 @@
 
 .DS_Store
+
+# Environment variables (keep API keys secret!)
+.env
+.env.local
+.env.production
+
+# Vercel
+.vercel
+
+# Node modules
+node_modules/

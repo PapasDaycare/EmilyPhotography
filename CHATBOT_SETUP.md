@@ -1,77 +1,83 @@
-# Emily Photography AI Chatbot
+# Emily Photography AI Chatbot - Secure Setup
 
-## Setup Instructions
+## ✅ What's Included
 
-The AI chatbot has been added to your website. To make it functional, you need to add your OpenAI API key.
+Your chatbot now uses a **secure serverless function** that keeps your API key private. The API key is never exposed in your website code.
 
-### Step 1: Get an OpenAI API Key
+## 🚀 Deployment Steps
 
-1. Go to https://platform.openai.com/api-keys
-2. Sign up or log in to your OpenAI account
-3. Click "Create new secret key"
-4. Copy the key (it starts with `sk-`)
+### Step 1: Deploy to Vercel (Free)
 
-### Step 2: Add Your API Key
+1. **Install Vercel CLI** (if you haven't already):
+   ```bash
+   npm install -g vercel
+   ```
 
-Open `chatbot.js` and find this line (around line 6):
+2. **Login to Vercel**:
+   ```bash
+   vercel login
+   ```
 
-```javascript
-this.apiKey = 'YOUR_OPENAI_API_KEY_HERE';
+3. **Deploy your site**:
+   ```bash
+   vercel
+   ```
+   - Follow the prompts
+   - Choose "Emily Photography" as the project name
+   - Accept the default settings
+
+### Step 2: Add Your API Key as Environment Variable
+
+1. Go to your Vercel dashboard: https://vercel.com/dashboard
+2. Click on your "Emily Photography" project
+3. Go to **Settings** → **Environment Variables**
+4. Add a new variable:
+   - **Name**: `OPENAI_API_KEY`
+   - **Value**: Your OpenAI API key (starts with `sk-`)
+   - **Environments**: Check all (Production, Preview, Development)
+5. Click **Save**
+
+### Step 3: Redeploy
+
+After adding the environment variable:
+```bash
+vercel --prod
 ```
 
-Replace `'YOUR_OPENAI_API_KEY_HERE'` with your actual API key:
+## 🎉 Done!
 
-```javascript
-this.apiKey = 'sk-your-actual-key-here';
-```
+Your chatbot is now live and secure. The API key is stored safely in Vercel's environment variables and never exposed in your code.
 
-### Step 3: Important Security Note ⚠️
+## 📁 What Was Created
 
-**WARNING**: Putting your API key directly in the JavaScript file exposes it to anyone who visits your website. This means anyone could use your API key and you'll be charged for their usage.
+- `/api/chat.js` - Serverless function that securely calls OpenAI
+- `vercel.json` - Configuration for Vercel
+- `.env.example` - Template for local development
+- Updated `chatbot.js` - Now calls your secure API endpoint
 
-### Better Alternative: Use a Backend Service
+## 💰 Cost
 
-For production use, you should:
+- Vercel hosting: **Free** for personal projects
+- OpenAI API: Pay-per-use (~$0.0015 per conversation with GPT-3.5-turbo)
 
-1. **Option A**: Use a serverless function (Vercel/Netlify Functions)
-   - Create a backend endpoint that securely calls OpenAI
-   - The chatbot calls YOUR endpoint instead of OpenAI directly
-   - Your API key stays hidden on the server
+## 🔒 Security
 
-2. **Option B**: Use a chatbot service like:
-   - Tawk.to (free)
-   - Tidio (has free tier)
-   - Crisp (has free tier)
+✅ API key is never in your website code  
+✅ API key is stored as an environment variable  
+✅ Only your serverless function can access it  
+✅ Safe to commit all code to GitHub  
 
-### For Testing Only
+## Alternative: GitHub Pages + Vercel
 
-If you just want to test it locally:
-1. Add your API key to `chatbot.js`
-2. Test it on your local computer
-3. **Remove the API key before pushing to GitHub**
+If you want to keep GitHub Pages for hosting but use Vercel just for the API:
 
-### Customization
-
-You can customize the chatbot's behavior by editing the `systemPrompt` in `chatbot.js` (around line 95). This controls:
-- How the bot introduces itself
-- What information it provides
-- Its tone and personality
-
-### Cost Estimate
-
-- Using GPT-3.5-turbo: ~$0.0015 per conversation
-- 1000 conversations ≈ $1.50
-- Monitor usage at https://platform.openai.com/usage
-
-## Features
-
-- ✅ Branded design matching your website colors
-- ✅ Mobile responsive
-- ✅ Smooth animations
-- ✅ Typing indicators
-- ✅ Context-aware responses about Emily Photography
-- ✅ Can answer questions about pricing, services, booking
+1. Deploy to Vercel as above
+2. Update the fetch URL in `chatbot.js` from `/api/chat` to:
+   ```javascript
+   fetch('https://your-vercel-url.vercel.app/api/chat', { ... })
+   ```
 
 ## Need Help?
 
-Let me know if you need help setting up a secure backend endpoint for the chatbot!
+- Vercel Documentation: https://vercel.com/docs
+- OpenAI API Docs: https://platform.openai.com/docs
