@@ -129,6 +129,7 @@ class EmilyBot {
       this.hideTypingIndicator();
       this.addMessage(response, 'bot');
     } catch (error) {
+      console.error('Chatbot error:', error);
       this.hideTypingIndicator();
       this.addMessage("I'm sorry, I'm having trouble connecting right now. Please try the booking form or email Emily directly at Emily.hopp316@gmail.com", 'bot');
     }
@@ -181,7 +182,9 @@ If asked about specific pricing, availability, or booking details, encourage the
     });
 
     if (!response.ok) {
-      throw new Error('API request failed');
+      const errorText = await response.text();
+      console.error('API error response:', response.status, errorText);
+      throw new Error(`API request failed: ${response.status}`);
     }
 
     const data = await response.json();
