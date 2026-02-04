@@ -175,7 +175,7 @@ If asked about specific pricing, availability, or booking details, encourage the
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('https://emily-photography-qfnyjaquo-jeremy-prices-projects-744464c3.vercel.app/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
