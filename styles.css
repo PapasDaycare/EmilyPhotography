@@ -585,6 +585,7 @@ footer{ padding:28px 0; color:#64748b; }
     border-bottom-left-radius:12px;
     border-bottom-right-radius:12px;
     border:1px solid #eaeaea;
+    z-index: 100;
   }
 
   /* Show nav when the container has .nav-open */
